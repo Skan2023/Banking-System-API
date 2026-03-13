@@ -24,7 +24,7 @@ public class CustomerServiceImp implements CustomerService {
 
     @Override
     public Customer getCustomerById(Integer id) {
-        return customerMapper.finCustomerById(id);
+        return customerMapper.findCustomerById(id);
     }
 
     @Override
@@ -40,7 +40,7 @@ public class CustomerServiceImp implements CustomerService {
     @Override
     public boolean deleteCustomerById(Integer id) {
 
-        if (customerMapper.finCustomerById(id) == null) {
+        if (customerMapper.findCustomerById(id) == null) {
             return false;
         }
 

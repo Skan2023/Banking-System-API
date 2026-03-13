@@ -22,7 +22,7 @@ public interface CustomerMapper {
 
     @Select("SELECT * FROM customers WHERE id=#{id}")
     @ResultMap("customerMapper")
-    Customer finCustomerById(Integer id);
+    Customer findCustomerById(Integer id);
 
     @Select("""
             INSERT INTO customers(full_name, email, phone, created_at)
