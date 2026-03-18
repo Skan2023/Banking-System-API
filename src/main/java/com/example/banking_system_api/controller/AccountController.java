@@ -1,7 +1,6 @@
 package com.example.banking_system_api.controller;
 
-import com.example.banking_system_api.dto.request.CreateAccountRequest;
-import com.example.banking_system_api.dto.request.UpdateAccountRequest;
+import com.example.banking_system_api.dto.request.*;
 import com.example.banking_system_api.model.Account;
 import com.example.banking_system_api.response.ApiResponse;
 import com.example.banking_system_api.service.AccountService;
@@ -45,6 +44,27 @@ public class AccountController {
         ApiResponse<Account> response = new ApiResponse<>(false, "Account with id " + id + " not found.", null);
 
         return response;
+    }
+
+    @PostMapping("/deposit")
+    public ApiResponse<String> depositMoney(@Valid @RequestBody DepositRequest depositRequest) {
+        accountService.depositMoney(depositRequest);
+
+        return new ApiResponse<>(true, "Deposit successfully!", depositRequest.getAmount().toString() + "$");
+    }
+
+    @PostMapping("/withdraw")
+    public ApiResponse<String> withdrawMoney(@Valid @RequestBody WithdrawRequest withdrawRequest) {
+        accountService.withdrawMoney(withdrawRequest);
+
+        return new ApiResponse<>(true, "Withdraw successfully!", withdrawRequest.getAmount().toString() + "$");
+    }
+
+    @PostMapping("/transfer")
+    public ApiResponse<String> transferMoney(@Valid @RequestBody TransferRequest transferRequest) {
+        accountService.transferMoney(transferRequest);
+
+        return new ApiResponse<>(true, "Transfer successfully!", transferRequest.getAmount().toString() + "$");
     }
 
     @PostMapping

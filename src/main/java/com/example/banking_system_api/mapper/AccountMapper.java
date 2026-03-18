@@ -1,7 +1,9 @@
 package com.example.banking_system_api.mapper;
 
 import com.example.banking_system_api.dto.request.CreateAccountRequest;
+import com.example.banking_system_api.dto.request.DepositRequest;
 import com.example.banking_system_api.dto.request.UpdateAccountRequest;
+import com.example.banking_system_api.dto.request.WithdrawRequest;
 import com.example.banking_system_api.model.Account;
 import com.example.banking_system_api.service.AccountService;
 import org.apache.ibatis.annotations.*;
@@ -24,6 +26,33 @@ public interface AccountMapper {
     @Select("SELECT * FROM accounts WHERE id = #{id}")
     @ResultMap("accountMapper")
     Account findAccountById(Integer id);
+
+    @Select("""
+        SELECT * FROM accounts
+        WHERE account_number = #{accountNumber}
+    """)
+    Account findByAccountNumber(String accountNumber);
+
+    @Update("""
+        UPDATE accounts
+        SET balance = #{balance}
+        WHERE account_number = #{accountNumber}
+    """)
+    void updateBalance(Account account);
+
+    @Update("""
+            UPDATE accounts
+            SET balance = balance + #{amount}
+            WHERE account_number = #{accountNumber}
+            """)
+    void depositMoney(DepositRequest depositRequest);
+
+    @Update("""
+            UPDATE accounts
+            SET balance = balance - #{amount}
+            WHERE account_number = #{accountNumber}
+            """)
+    void withdrawMoney(WithdrawRequest withdrawRequest);
 
     @Select("""
             INSERT INTO accounts(account_number, balance, account_type, customer_id, created_at)
